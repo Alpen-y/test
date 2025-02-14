@@ -38,7 +38,7 @@ jobs:
     - name: 安装依赖并打包
       run: |
         pnpm install    # 使用 pnpm 安装项目依赖
-        pnpm run build  # 执行构建命令，生成静态文件
+        pnpm build  # 执行构建命令，生成静态文件
 
     # 步骤5: 部署到 GitHub Pages
     - name: 部署
