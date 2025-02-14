@@ -1,27 +1,49 @@
+# 工作流名称
 name: 打包vue项目
+# 触发条件：当有代码推送到仓库时
 on: push
 
+# 工作流所需权限
 permissions:
+  # 允许工作流写入仓库内容（用于部署到 gh-pages 分支）
   contents: write
 
-
+# 定义工作流中的作业
 jobs:
+  # 构建作业
   build:
     name: npm-build工作
+    # 指定运行环境为最新版本的 Ubuntu
     runs-on: ubuntu-latest
 
+    # 定义作业的步骤
     steps:
+    # 步骤1: 检出代码
     - name: 读取仓库内容
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4  # 使用官方的 checkout action
 
+    # 步骤2: 设置 Node.js 环境
+    - name: 设置 Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'  # 指定 Node.js 版本
+
+    # 步骤3: 安装 pnpm
+    - name: 安装 pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8  # 指定 pnpm 版本
+
+    # 步骤4: 安装依赖并构建项目
     - name: 安装依赖并打包
       run: |
-        pnpm install
-        pnpm run build
+        pnpm install    # 使用 pnpm 安装项目依赖
+        pnpm run build  # 执行构建命令，生成静态文件
 
+    # 步骤5: 部署到 GitHub Pages
     - name: 部署
-      uses: JamesIves/github-pages-deploy-action@v4
+      uses: JamesIves/github-pages-deploy-action@v4  # 使用 GitHub Pages 部署 action
       with:
-        branch: gh-pages
-        folder: dist
+        branch: gh-pages  # 部署到 gh-pages 分支
+        folder: dist      # 部署 dist 目录下的构建文件
 
