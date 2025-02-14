@@ -1,9 +1,10 @@
 name: 打包vue项目
+on: push
 
 permissions:
   contents: write
 
-on: push
+
 jobs:
   build:
     name: npm-build工作
