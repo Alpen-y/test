@@ -53,9 +53,8 @@ jobs:
           which pnpm  # 应该输出 /opt/hostedtoolcache/pnpm/8.x.x/x64/pnpm
           
           echo "➡️ 正在安装项目依赖..."
-          pnpm install --frozen-lockfile
+          pnpm install 
           pnpm build
-          ls -lh dist/
 
       # ————————————————————————
       # 🚀 步骤4：GitHub Pages部署
