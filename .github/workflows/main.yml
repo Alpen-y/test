@@ -33,7 +33,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"  # 📌 指定LTS版本
-          cache: "pnpm"       # 🗄️ 启用pnpm缓存（需要先安装pnpm）
+          cache: "pnpm"       # 🗄️ 启用pnpm缓存（需要在安装pnpm后配置）
 
       # ————————————————————————
       # 📦 步骤3：包管理器安装
@@ -48,17 +48,16 @@ jobs:
       # ————————————————————————
       - name: "⚡ 依赖安装与项目构建"
         run: |
-          echo "➡️ 验证pnpm可用性..."
-          pnpm --version  # ✅ 新增版本验证
+          echo "➡️ 验证环境变量..."
+          echo "PATH: $PATH"
+          
+          echo "➡️ 验证可执行文件..."
+          which pnpm  # 应该输出 /opt/hostedtoolcache/pnpm/8.x.x/x64/pnpm
           
           echo "➡️ 正在安装项目依赖..."
           pnpm install --frozen-lockfile
-          
-          echo "🚀 开始构建生产环境包..."
-          pnpm build --mode production    # 🏗️ 执行构建命令
-          
-          echo "✅ 构建完成，查看文件结构："
-          ls -lh dist/  # 📂 显示构建目录结构
+          pnpm build
+          ls -lh dist/
 
       # ————————————————————————
       # 🚀 步骤5：GitHub Pages部署
